@@ -387,3 +387,11 @@ func (bs *bitswap) Close() error {
 	bs.cancelFunc()
 	return nil // to conform to Closer interface
 }
+
+func (bs *bitswap) GetWantlist() []u.Key {
+	var out []u.Key
+	for _, e := range bs.wantlist.Entries() {
+		out = append(out, e.Key)
+	}
+	return out
+}
