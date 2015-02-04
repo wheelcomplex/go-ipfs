@@ -77,7 +77,7 @@ func run() error {
 	if err != nil {
 		return err
 	}
-	node, err := core.NewIPFSNode(ctx, core.OnlineWithRouting(repo, corerouting.GrandCentralServer(enhanced)))
+	node, err := core.NewIPFSNode(ctx, core.OnlineWithRouting(repo, corerouting.SupernodeServer(enhanced)))
 	if err != nil {
 		return err
 	}

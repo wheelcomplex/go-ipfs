@@ -84,18 +84,18 @@ func RunThreeLeggedCat(data []byte, conf testutil.LatencyConfig) error {
 	if len(peers) < numPeers {
 		return errors.New("test initialization error")
 	}
-	bootstrap, err := core.NewIPFSNode(ctx, MocknetTestRepo(peers[2], mn.Host(peers[2]), conf, corerouting.GrandCentralServer(
+	bootstrap, err := core.NewIPFSNode(ctx, MocknetTestRepo(peers[2], mn.Host(peers[2]), conf, corerouting.SupernodeServer(
 		ds2.CloserWrap(syncds.MutexWrap(datastore.NewMapDatastore())))))
 	if err != nil {
 		return err
 	}
 	defer bootstrap.Close()
-	adder, err := core.NewIPFSNode(ctx, MocknetTestRepo(peers[0], mn.Host(peers[0]), conf, corerouting.GrandCentralClient(peer.PeerInfo{ID: peers[2]})))
+	adder, err := core.NewIPFSNode(ctx, MocknetTestRepo(peers[0], mn.Host(peers[0]), conf, corerouting.SupernodeClient(peer.PeerInfo{ID: peers[2]})))
 	if err != nil {
 		return err
 	}
 	defer adder.Close()
-	catter, err := core.NewIPFSNode(ctx, MocknetTestRepo(peers[1], mn.Host(peers[1]), conf, corerouting.GrandCentralClient(peer.PeerInfo{ID: peers[2]})))
+	catter, err := core.NewIPFSNode(ctx, MocknetTestRepo(peers[1], mn.Host(peers[1]), conf, corerouting.SupernodeClient(peer.PeerInfo{ID: peers[2]})))
 	if err != nil {
 		return err
 	}
