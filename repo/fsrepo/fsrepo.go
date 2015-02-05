@@ -53,6 +53,7 @@ type FSRepo struct {
 	// the FSRepo is modified.
 	// TODO test
 	configComponent    component.ConfigComponent
+	identityComponent component.IdentityComponent
 	datastoreComponent component.DatastoreComponent
 	eventlogComponent  component.EventlogComponent
 }
@@ -328,6 +329,21 @@ func componentBuilders() []componentBuilder {
 					return err
 				}
 				r.configComponent = c
+				return nil
+			},
+		},
+
+		// IdentityComponent
+		componentBuilder{
+			Init:          component.InitIdentityComponent,
+			IsInitialized: component.IdentityComponentIsInitialized,
+			OpenHandler: func(r *FSRepo) error {
+				c := component.IdentityComponent{}
+				c.SetPath(r.path)
+				if err := c.Open(r.configComponent.Config()); err != nil {
+					return err
+				}
+				r.identityComponent = c
 				return nil
 			},
 		},
